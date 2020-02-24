@@ -24,20 +24,18 @@ begin
         .addOption('port', 1)
         .build();
     host := cliParams.getOption('host', '127.0.0.1');
-    port := cliParams.getOption('port', 20477);
+    port := cliParams.getOption('port', 80);
     writeln('Starting application at ', host, ':', port);
 
     (*!-----------------------------------------------
-     * Bootstrap SCGI application
+     * Bootstrap MicroHttpd application
      *
      * @author AUTHOR_NAME <author@email.tld>
      *------------------------------------------------*)
     appInstance := TDaemonWebApplication.create(
-        TScgiAppServiceProvider.create(
-            TServerAppServiceProvider.create(
-                TAppServiceProvider.create(),
-                (TInetSvrFactory.create(host, port) as ISocketSvrFactory).build()
-            )
+        TMhdAppServiceProvider.create(
+            TAppServiceProvider.create(),
+            port
         ),
         TAppRoutes.create()
     );
