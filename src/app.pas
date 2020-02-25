@@ -24,7 +24,7 @@ begin
         .addOption('port', 1)
         .build();
     host := cliParams.getOption('host', '127.0.0.1');
-    port := cliParams.getOption('port', 80);
+    port := cliParams.getOption('port', 8080);
     writeln('Starting application at ', host, ':', port);
 
     (*!-----------------------------------------------
@@ -35,6 +35,7 @@ begin
     appInstance := TDaemonWebApplication.create(
         TMhdAppServiceProvider.create(
             TAppServiceProvider.create(),
+            host,
             port
         ),
         TAppRoutes.create()
