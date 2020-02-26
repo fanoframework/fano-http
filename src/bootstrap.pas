@@ -40,7 +40,8 @@ uses
      *   controllers factory
      *----------------------------------- *)
     {---- put your controller factory here ---},
-    HomeControllerFactory;
+    HomeControllerFactory,
+    AuthControllerFactory;
 
 
 

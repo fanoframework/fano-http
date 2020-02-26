@@ -6,9 +6,4 @@
  * @license   [[LICENSE_URL]] ([[LICENSE]])
  *------------------------------------------------------------- *)
 
-{%dependencies.inc}
-
-{---put your dependencies registration here---}
-
-container.add('homeController', THomeControllerFactory.create());
-container.add('authController', TAuthControllerFactory.create());
+router.post('/auth', container.get('authController') as IRequestHandler);

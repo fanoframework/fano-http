@@ -43,6 +43,9 @@
 -Fu$USER_APP_DIR$/Routes
 -Fu$USER_APP_DIR$/App/Home/Controllers
 -Fu$USER_APP_DIR$/App/Home/Controllers/Factories
+-Fu$USER_APP_DIR$/App/Auth/Controllers
+-Fu$USER_APP_DIR$/App/Auth/Controllers/Factories
+
 
 #-Fu$USER_APP_DIR$/path/to/other/units
 #-Fu$USER_APP_DIR$/path/to/other/units
