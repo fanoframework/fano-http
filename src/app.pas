@@ -8,24 +8,30 @@
 program app;
 
 uses
-
+    cthreads,
+    SysUtils,
     fano,
     bootstrap;
 
 var
     appInstance : IWebApplication;
     cliParams : ICliParams;
-    host : string;
-    port : word;
+    svrConfig : TMhdSvrConfig;
 
 begin
     cliParams := (TGetOptsParams.create() as ICliParamsFactory)
         .addOption('host', 1)
         .addOption('port', 1)
         .build();
-    host := cliParams.getOption('host', '127.0.0.1');
-    port := cliParams.getOption('port', 8080);
-    writeln('Starting application at ', host, ':', port);
+    svrConfig.host := cliParams.getOption('host', '127.0.0.1');
+    svrConfig.port := cliParams.getOption('port', 8080);
+    writeln('Starting application at ', svrConfig.host, ':', svrConfig.port);
+
+    svrConfig.documentRoot := getCurrentDir() + '/public';
+    svrConfig.serverName := 'http.fano';
+    svrConfig.serverAdmin := 'admin@http.fano';
+    svrConfig.serverSoftware := 'Fano Framework Web App';
+    svrConfig.timeout := 120;
 
     (*!-----------------------------------------------
      * Bootstrap MicroHttpd application
@@ -35,8 +41,7 @@ begin
     appInstance := TDaemonWebApplication.create(
         TMhdAppServiceProvider.create(
             TAppServiceProvider.create(),
-            host,
-            port
+            svrConfig
         ),
         TAppRoutes.create()
     );
