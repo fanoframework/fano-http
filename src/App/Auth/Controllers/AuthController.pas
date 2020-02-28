@@ -48,9 +48,10 @@ uses
     ) : IResponse;
     var
         postParams : IReadOnlyList;
-        i : integer;
+        i, j : integer;
         keyName : string;
         respBody : IResponseStream;
+        uploadFiles : IUploadedFileArray;
     begin
         respBody := response.body();
         respBody.write('<html><head><title>Auth controller</title></head><body>');
@@ -69,7 +70,23 @@ uses
                     ])
             );
         end;
-        respBody.write('</ul></body></html>');
+        respBody.write('</ul>');
+
+        respBody.write('<ul>');
+        for i:= 0 to request.uploadedFiles.count() - 1 do
+        begin
+            uploadFiles := request.uploadedFiles.getUploadedFile(i);
+            for j:=0  to length(uploadFiles) - 1 do
+            begin
+                uploadFiles[j].moveTo(
+                    GetCurrentDir() + '/storages/uploads/' + uploadFiles[j].getClientFilename()
+                );
+                respBody.write('<li>' + uploadFiles[j].getClientFilename() + '</li>');
+            end;
+        end;
+        respBody.write('</ul>');
+        respBody.write('</body></html>');
+
         result := response;
     end;
 
