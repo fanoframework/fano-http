@@ -23,6 +23,7 @@ begin
         .addOption('host', 1)
         .addOption('port', 1)
         .build();
+    scrConfig := default(TMhdSvrConfig);
     svrConfig.host := cliParams.getOption('host', '127.0.0.1');
     svrConfig.port := cliParams.getOption('port', 8080);
     writeln('Starting application at ', svrConfig.host, ':', svrConfig.port);
